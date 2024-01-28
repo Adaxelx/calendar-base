@@ -1,24 +1,24 @@
 import { HttpResponse, http } from 'msw'
 import { registerData, user } from './data'
-import { getUrl } from '../../constants'
+import { getApiUrl } from '../../constants'
 
 const BASE = '/users'
 
 const WITH_ID = `${BASE}/:id`
 
-const getUser = http.get(getUrl(WITH_ID), async () => {
+const getUser = http.get(getApiUrl(WITH_ID), async () => {
 	return HttpResponse.json(user)
 })
 
-const postUser = http.post(getUrl(BASE), async () => {
+const postUser = http.post(getApiUrl(BASE), async () => {
 	return HttpResponse.json(registerData)
 })
 
-const editUser = http.put(getUrl(WITH_ID), async () => {
+const editUser = http.put(getApiUrl(WITH_ID), async () => {
 	return HttpResponse.json(user)
 })
 
-const deleteUser = http.delete(getUrl(WITH_ID), async () => {
+const deleteUser = http.delete(getApiUrl(WITH_ID), async () => {
 	return HttpResponse.json({})
 })
 

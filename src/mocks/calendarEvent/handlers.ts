@@ -1,28 +1,28 @@
 import { HttpResponse, http } from 'msw'
 import { events, event } from './data'
-import { getUrl } from '../../constants'
+import { getApiUrl } from '../../constants'
 
 const BASE = '/calendar-events'
 
 const WITH_ID = `${BASE}/:eventId`
 
-const getCalendarEvents = http.get(getUrl(BASE), async () => {
+const getCalendarEvents = http.get(getApiUrl(BASE), async () => {
 	return HttpResponse.json(events)
 })
 
-const getCalendarEvent = http.get(getUrl(WITH_ID), async () => {
+const getCalendarEvent = http.get(getApiUrl(WITH_ID), async () => {
 	return HttpResponse.json(event)
 })
 
-const postCalendarEvent = http.post(getUrl(BASE), async () => {
+const postCalendarEvent = http.post(getApiUrl(BASE), async () => {
 	return HttpResponse.json(event)
 })
 
-const editCalendarEvent = http.put(getUrl(WITH_ID), async () => {
+const editCalendarEvent = http.put(getApiUrl(WITH_ID), async () => {
 	return HttpResponse.json(event)
 })
 
-const deleteCalendarEvent = http.delete(getUrl(WITH_ID), async () => {
+const deleteCalendarEvent = http.delete(getApiUrl(WITH_ID), async () => {
 	return HttpResponse.json({})
 })
 
