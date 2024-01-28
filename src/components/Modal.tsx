@@ -27,7 +27,7 @@ const Modal = ({
 				<Overlay className="grid place-content-center p-3 w-full h-full bg-primary-600 bg-opacity-40 fixed top-0" />
 				<Content
 					{...delegated}
-					className={`fixed w-full max-w-sm top-1/2 -translate-x-1/2  flex flex-col overflow-auto left-1/2 my-0  bg-accent-500 rounded p-4 text-white ${className} `}
+					className={`fixed w-[calc(100%-24px)] max-h-[calc(100%-24px)] max-w-sm top-1/2 -translate-x-1/2 -translate-y-1/2  flex flex-col  left-1/2 my-0  bg-accent-500 rounded p-4 text-white ${className}`}
 				>
 					<Close
 						className="self-end text-red-100 flex h-8 w-8 items-center justify-center"
@@ -36,7 +36,7 @@ const Modal = ({
 						<span className="sr-only">Zamknij</span>
 						<Cross1Icon />
 					</Close>
-					{children}
+					<section className={`overflow-auto h-full`}>{children} </section>
 				</Content>
 			</Portal>
 		</Root>

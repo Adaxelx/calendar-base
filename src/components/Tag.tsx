@@ -13,7 +13,7 @@ export default function Tag({ className, color, children, ...rest }: TagProps) {
 	return (
 		<span
 			{...rest}
-			className={cn(`bg-${color}-300 px-7 py-2 rounded block`, className)}
+			className={cn(`bg-${color}-300 px-7 py-2 rounded-full block`, className)}
 		>
 			{children}
 		</span>

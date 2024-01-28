@@ -1,6 +1,10 @@
 import type { Config } from "tailwindcss";
 import colors from "tailwindcss/colors";
 
+const PRIMARY = colors.neutral
+const SECONDARY = colors.yellow;
+const ACCENT =colors.violet;
+
 /** @type {import('tailwindcss').Config} */
 export default { 
   content: [
@@ -16,9 +20,12 @@ export default {
         "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
       },
       colors: {
-        primary: colors.slate,
-        secondary: colors.yellow,
-        accent: colors.violet,
+        primary: PRIMARY,
+        secondary: SECONDARY,
+        accent: ACCENT,
+        background: PRIMARY[50],
+        input: ACCENT[200],
+        
       },
     },
   },
