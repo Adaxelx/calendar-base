@@ -1,0 +1,51 @@
+import { useState } from 'react'
+
+import {
+	RegisterFields,
+	RegisterStateUpdater,
+	validateSubmission,
+} from '@/use-cases/CreateAccount'
+import { postUser } from '@/model/user.model'
+
+import { setCookie } from '@/utils/auth'
+import { useMutation } from '@/hooks/useMutation'
+import { useValidator } from '@/hooks/useValidator'
+
+const INITIAL_STATE = {
+	password: '',
+	repeatPassword: '',
+	username: '',
+}
+
+/** Connect react state logic to business logic */
+export default function useCreateUser() {
+	const [registerState, setRegisterState] =
+		useState<RegisterFields>(INITIAL_STATE)
+
+	const { mutate } = useMutation(postUser) // add tests
+	const { validate, validationErrors } = useValidator(validateSubmission) // add tests
+
+	const handleRegisterStateUpdate: RegisterStateUpdater = (field, value) => {
+		setRegisterState(prevState => ({ ...prevState, [field]: value }))
+	}
+
+	const handleSubmit: React.FormEventHandler<HTMLFormElement> = async e => {
+		e.preventDefault()
+		if (!validate(registerState)) return
+		const userData = await mutate({
+			username: registerState.username,
+			password: registerState.password,
+		})
+		const token = userData?.authorized?.accessToken
+		if (!token) return
+		setCookie('accessToken', token)
+		// add redirect here to calendar
+	}
+
+	return {
+		registerState,
+		validationErrors,
+		handleSubmit,
+		handleInputChange: handleRegisterStateUpdate,
+	}
+}

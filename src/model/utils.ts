@@ -1,12 +1,14 @@
 type UserRequestInit = Omit<RequestInit, 'body'> & { body?: unknown }
 
-export function client(endpoint: string, customConfig: UserRequestInit = {}) {
+export function client<T>(
+	endpoint: string,
+	customConfig: UserRequestInit = {},
+) {
 	const config = stringifyBody(getRequestConfiguration(customConfig))
 
 	return window
 		.fetch(getEndpointUrl(endpoint), config)
-		.then(handleResponse)
-		.catch(handleError)
+		.then(handleResponse<T>) as Promise<NonNullable<Awaited<T>>>
 }
 
 const handleOtherErrors = async (response: Response) => {
@@ -14,17 +16,13 @@ const handleOtherErrors = async (response: Response) => {
 	throw new Error(errorMessage)
 }
 
-const handleResponse = async (response: Response) => {
+const handleResponse = async <T>(response: Response) => {
 	await handle401Response(response)
-	const data = await handleSuccessResponse(response)
+	const data = await handleSuccessResponse<T>(response)
 	if (data) {
 		return data
 	}
 	await handleOtherErrors(response)
-}
-
-const handleError = (error: Error) => {
-	return Promise.reject(error)
 }
 
 const handle401Response = (response: Response) => {
@@ -36,11 +34,10 @@ const handle401Response = (response: Response) => {
 	return response
 }
 
-const handleSuccessResponse = (response: Response) => {
+const handleSuccessResponse = <T>(response: Response) => {
 	if (response.ok) {
-		return response.json()
+		return response.json() as Promise<T>
 	}
-	return response
 }
 
 const getEndpointUrl = (endpoint: string) =>
