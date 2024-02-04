@@ -1,12 +1,8 @@
-import { AuthDTO, AuthDataDTO } from './auth.model'
+import { AuthDTO } from './auth.model'
 import { client } from './utils'
 
 export const getUser = async (userId: UserDTO['id']) => {
 	return client(`users/${userId}`)
-}
-
-export const postUser = async (user: AuthDataDTO) => {
-	return client<UserRegisterDTO>('users', { body: user })
 }
 
 export const editUser = async (userId: UserDTO['id'], user: UserWithoutId) => {

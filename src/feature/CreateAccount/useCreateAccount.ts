@@ -5,11 +5,11 @@ import {
 	RegisterStateUpdater,
 	validateSubmission,
 } from '@/use-cases/CreateAccount'
-import { postUser } from '@/model/user.model'
 
 import { setCookie } from '@/utils/auth'
 import { useMutation } from '@/hooks/useMutation'
 import { useValidator } from '@/hooks/useValidator'
+import { createUser } from '@/model/auth.model'
 
 const INITIAL_STATE = {
 	password: '',
@@ -22,7 +22,7 @@ export default function useCreateUser() {
 	const [registerState, setRegisterState] =
 		useState<RegisterFields>(INITIAL_STATE)
 
-	const { mutate } = useMutation(postUser) // add tests
+	const { mutate } = useMutation(createUser) // add tests
 	const { validate, validationErrors } = useValidator(validateSubmission) // add tests
 
 	const handleRegisterStateUpdate: RegisterStateUpdater = (field, value) => {

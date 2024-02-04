@@ -1,3 +1,4 @@
+import { UserRegisterDTO } from './user.model'
 import { client } from './utils'
 
 export type AuthDataDTO = {
@@ -11,6 +12,12 @@ export type AuthDTO = {
 	expiresIn: number
 }
 
+const BASE = 'auth'
+
 export const loginUser = async (userCredentials: AuthDataDTO) => {
-	return client('auth/login', { body: userCredentials })
+	return client(`${BASE}/login`, { body: userCredentials })
+}
+
+export const createUser = async (user: AuthDataDTO) => {
+	return client<UserRegisterDTO>(`${BASE}/register`, { body: user })
 }

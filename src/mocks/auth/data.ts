@@ -4,3 +4,9 @@ export const authorized = {
 	tokenType: 'bearer',
 	expiresIn: 3600,
 }
+
+export const registerData = {
+	id: 1,
+	usernname: 'Bob',
+	authorized,
+}
