@@ -6,3 +6,7 @@ export const range = (start: number, end: number) => {
 		(_, i) => i + start,
 	)
 }
+
+export const capitalizeFirstLetter = (string: string) => {
+	return string.charAt(0).toUpperCase() + string.slice(1)
+}

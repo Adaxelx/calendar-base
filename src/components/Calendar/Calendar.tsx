@@ -73,6 +73,16 @@ const CalendarNavigation = ({
 	)
 }
 
+const DayOfWeekTile = ({ children }: { children: React.ReactNode }) => {
+	return (
+		<div className="w-full h-12 grid place-content-center border-b border-accent-400 text-accent-700">
+			{children}
+		</div>
+	)
+}
+
+Calendar.DayOfWeekTile = DayOfWeekTile
+
 const Tile = ({
 	isSelected,
 	className = '',
@@ -86,7 +96,9 @@ const Tile = ({
 			className={cn(
 				`w-full h-24 grid place-content-center border-b text-accent-700 border-accent-400 border-r ${
 					styles.tile
-				} ${isSelected ? 'bg-accent-300' : 'bg-accent-200'}`,
+				} ${isSelected ? 'bg-accent-300' : 'bg-accent-200'} ${
+					rest.children ? '' : ''
+				}`,
 				className,
 			)}
 		/>

@@ -1,5 +1,5 @@
 import { range } from '@/utils'
-import { DateType } from '@/utils/date'
+import { DateType, dateLib, transformSundayToLast } from '@/utils/date'
 
 export const getCalendarDaysForGivenMonth = (date: DateType) => {
 	const firstDay = date.startOf('month').date()
@@ -12,6 +12,17 @@ export const getCalendarDaysForGivenMonth = (date: DateType) => {
 	return days
 }
 
+export const getAdjustCalendarDaysForWeeks = (date: DateType) => {
+	const firstDay = transformSundayToLast(date.startOf('month'))
+
+	return range(0, firstDay - 1)
+}
+
 export const getPreviousMonth = (date: DateType) => date.subtract(1, 'month')
 
 export const getNextMonth = (date: DateType) => date.add(1, 'month')
+
+export const getAllDaysOfWeek = () => {
+	const [sunday, ...rest] = dateLib.weekdaysShort()
+	return [...rest, sunday]
+}

@@ -1,5 +1,7 @@
 import { dateLib } from '@/utils/date'
 import {
+	getAdjustCalendarDaysForWeeks,
+	getAllDaysOfWeek,
 	getCalendarDaysForGivenMonth,
 	getNextMonth,
 	getPreviousMonth,
@@ -72,6 +74,44 @@ describe('getNextMonth', () => {
 		it(`should return the next month for a given date (${date})`, () => {
 			const result = getNextMonth(dateLib(date))
 			expect(result.format('YYYY-MM-DD')).toBe(expected)
+		})
+	})
+})
+
+describe('getAllDaysOfWeek', () => {
+	it('should return an array of all days of the week', () => {
+		const result = getAllDaysOfWeek()
+		expect(result).toEqual(['pon', 'wt', 'śr', 'czw', 'pt', 'sob', 'ndz'])
+	})
+})
+
+describe('getAdjustCalendarDaysForWeeks', () => {
+	const TEST_CASES = [
+		{
+			date: '2024-02-01',
+			expected: 3,
+		},
+		{
+			date: '2024-03-20',
+			expected: 4,
+		},
+		{
+			date: '2024-04-30',
+			expected: 0,
+		},
+		{
+			date: '2024-09-15',
+			expected: 6,
+		},
+		{
+			date: '2024-06-30',
+			expected: 5,
+		},
+	]
+	TEST_CASES.forEach(({ date, expected }) => {
+		it(`should return an array of adjusted calendar days to weeks for a given date (${date})`, () => {
+			const result = getAdjustCalendarDaysForWeeks(dateLib(date))
+			expect(result.length).toBe(expected)
 		})
 	})
 })
