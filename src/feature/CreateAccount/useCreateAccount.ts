@@ -1,15 +1,14 @@
 import { useState } from 'react'
 
+import { setCookie } from '@/utils/auth'
+import { useMutation } from '@/hooks/useMutation'
+import { useValidator } from '@/hooks/useValidator'
+import { createUser } from '@/model/auth.model'
 import {
 	RegisterFields,
 	RegisterStateUpdater,
 	validateSubmission,
 } from '@/use-cases/CreateAccount'
-
-import { setCookie } from '@/utils/auth'
-import { useMutation } from '@/hooks/useMutation'
-import { useValidator } from '@/hooks/useValidator'
-import { createUser } from '@/model/auth.model'
 
 const INITIAL_STATE = {
 	password: '',
