@@ -48,3 +48,18 @@ export const formatHoursStartAndEnd = (startDate: string, endDate: string) => {
 		'HH:mm',
 	)}`
 }
+
+export const formatCalendarEvent = ({
+	id,
+	title,
+	start,
+	end,
+	tags,
+}: CalendarEventDTO) => ({
+	id,
+	title,
+	formatedTime: formatHoursStartAndEnd(start, end),
+	tags,
+})
+
+export type FormattedCalendarEvent = ReturnType<typeof formatCalendarEvent>
