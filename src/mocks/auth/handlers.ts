@@ -1,14 +1,14 @@
 import { HttpResponse, http } from 'msw'
 import { authorized, registerData } from './data'
-import { getApiUrl } from '../../constants'
+import { getEndpointUrl } from '@/model/utils'
 
-const BASE = '/auth'
+const BASE = 'auth'
 
-const login = http.post(getApiUrl(`${BASE}/login`), async () => {
+const login = http.post(getEndpointUrl(`${BASE}/login`), async () => {
 	return HttpResponse.json(authorized)
 })
 
-const postUser = http.post(getApiUrl(BASE), async () => {
+const postUser = http.post(getEndpointUrl(BASE), async () => {
 	return HttpResponse.json(registerData)
 })
 

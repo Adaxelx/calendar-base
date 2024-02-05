@@ -1,7 +1,17 @@
-import { client } from './utils'
+import { TagDTO } from './tag.model'
+import { client, createSearchParams } from './utils'
 
-export const getCalendarEvents = async () => {
-	return client('calendar-events')
+type CalendarEventsFilters = {
+	start: string
+	end: string
+}
+
+export const getCalendarEvents = async (
+	filters: Partial<CalendarEventsFilters> = {},
+) => {
+	return client<CalendarEventDTO[]>(
+		`calendar-events${createSearchParams(filters)}`,
+	)
 }
 
 export const getCalendarEvent = async (eventId: number) => {
@@ -14,7 +24,7 @@ export type CalendarEventDTO = {
 	description: string
 	start: string
 	end: string
-	tagsIds: number[]
+	tags: TagDTO[]
 }
 
 type CalendarEventWithoutId = Omit<CalendarEventDTO, 'id'>

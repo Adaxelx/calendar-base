@@ -1,7 +1,7 @@
 import { client } from './utils'
 
 export const getTags = async () => {
-	return client('tags')
+	return client<TagDTO[]>('tags')
 }
 
 export const getTag = async (tagId: TagDTO['id']) => {

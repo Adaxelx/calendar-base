@@ -1,3 +1,3 @@
-export const API_URL = 'http://localhost:3000' // tmp for mock purposes
+export const DATE_FORMAT = 'YYYY-MM-DD'
 
-export const getApiUrl = (path: string) => `${API_URL}${path}`
+export const VISUAL_DATE_FORMAT = 'DD.MM.YYYY'

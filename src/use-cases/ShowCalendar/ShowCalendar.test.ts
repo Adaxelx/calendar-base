@@ -6,6 +6,7 @@ import {
 	getNextMonth,
 	getPreviousMonth,
 } from './ShowCalendar'
+import { DATE_FORMAT } from '@/constants'
 
 describe('getCalendarDaysForGivenMonth', () => {
 	const TEST_CASES = [
@@ -50,7 +51,7 @@ describe('getPreviousMonth', () => {
 	TEST_CASES.forEach(({ date, expected }) => {
 		it(`should return the previous month for a given date (${date})`, () => {
 			const result = getPreviousMonth(dateLib(date))
-			expect(result.format('YYYY-MM-DD')).toBe(expected)
+			expect(result.format(DATE_FORMAT)).toBe(expected)
 		})
 	})
 })
@@ -73,7 +74,7 @@ describe('getNextMonth', () => {
 	TEST_CASES.forEach(({ date, expected }) => {
 		it(`should return the next month for a given date (${date})`, () => {
 			const result = getNextMonth(dateLib(date))
-			expect(result.format('YYYY-MM-DD')).toBe(expected)
+			expect(result.format(DATE_FORMAT)).toBe(expected)
 		})
 	})
 })

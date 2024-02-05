@@ -40,8 +40,8 @@ const handleSuccessResponse = <T>(response: Response) => {
 	}
 }
 
-const getEndpointUrl = (endpoint: string) =>
-	`${process.env.REACT_APP_API_URL}/${endpoint}`
+export const getEndpointUrl = (endpoint: string) =>
+	`${import.meta.env.VITE_API_URL}/${endpoint}`
 
 function getInitialHeaders() {
 	const token = getLoginToken()
@@ -84,4 +84,9 @@ function logout() {
 
 function getLoginToken() {
 	return window.localStorage.getItem(localStorageKey)
+}
+
+export const createSearchParams = (params: Record<string, string>) => {
+	const searchParams = new URLSearchParams(params).toString()
+	return searchParams ? `?${searchParams}` : ''
 }
