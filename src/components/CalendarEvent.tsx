@@ -46,7 +46,7 @@ export const CalendarEventView = ({
 // 	formatedTime,
 // 	onChange,
 // }: FormattedCalendarEvent & { onChange: () => void; values: any }) => {
-// 	const [startTime, endTime] = formatedTime.replace(/\s/g, '').split('-')
+// 	const [startTime, endTime] = splitEventFormattedTime(formatedTime)
 // 	return (
 // 		<CalendarEvent
 // 			title={<Input value={title} onChange={onChange} />}

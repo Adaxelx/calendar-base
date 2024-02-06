@@ -27,6 +27,14 @@ export type CalendarEventDTO = {
 	tags: TagDTO[]
 }
 
+export type CalendarEventFormDTO = {
+	name: string
+	date: string
+	timeStart: string
+	timeEnd: string
+	tagsIds: string[]
+}
+
 type CalendarEventWithoutId = Omit<CalendarEventDTO, 'id'>
 
 export const postCalendarEvent = async (event: CalendarEventWithoutId) => {

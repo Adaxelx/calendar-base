@@ -5,6 +5,7 @@ import { VISUAL_DATE_FORMAT } from '@/constants'
 import FilterByTagsView from '../FilterByTags/FilterByTagsView'
 import { useFilterByTags } from '../FilterByTags/useFilterByTags'
 import { useShowCalendar } from './useShowCalendar'
+import { AddEventView } from '../AddEvent/AddEventView'
 
 export default function ShowCalendarView() {
 	const { handleFilterClick, showTagLoader, tags, filterByTags } =
@@ -70,6 +71,8 @@ export default function ShowCalendarView() {
 						</div>
 					</>
 				)}
+				<div className="flex-1" />
+				<AddEventView />
 			</section>
 		</article>
 	)
