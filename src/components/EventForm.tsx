@@ -19,6 +19,7 @@ type EventFormModalProps = {
 	tagsToSelect: ReturnType<typeof useAddEvent>['tagsToSelect']
 	children: ReactNode
 	formLabel: ReactNode
+	customActions?: ReactNode
 }
 
 export function EventFormModal({
@@ -50,6 +51,7 @@ const EventForm = ({
 	event,
 	tagsToSelect,
 	formLabel,
+	customActions,
 }: EventFormProps) => {
 	if (!event) return
 	return (
@@ -113,9 +115,12 @@ const EventForm = ({
 						</TagFilter>
 					))}
 				</section>
-				<Button type="submit" className="mt-5 self-end" variant="secondary">
-					Submit event
-				</Button>
+				<section className="flex justify-between items-center mt-5 ">
+					{customActions}
+					<Button type="submit" className="self-end" variant="secondary">
+						Submit event
+					</Button>
+				</section>
 			</form>
 		</>
 	)

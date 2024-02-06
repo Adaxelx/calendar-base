@@ -75,7 +75,10 @@ export default function ShowCalendarView() {
 							<p>{selectedDate.format(VISUAL_DATE_FORMAT)}</p>
 							<div className="flex flex-col gap-3 w-full">
 								{foundEvents.map(event => (
-									<EditEventView {...restEditProps}>
+									<EditEventView
+										{...restEditProps}
+										refetchCalendar={refetchCalendar}
+									>
 										<Modal.Trigger asChild>
 											<CalendarEventView
 												{...event}
