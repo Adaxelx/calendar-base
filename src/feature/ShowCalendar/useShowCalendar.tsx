@@ -68,3 +68,8 @@ export const useShowCalendar = (filterByTags: FilterByTags) => {
 		handlePrevMonth,
 	}
 }
+
+export type RefetchCalendarFunction = Pick<
+	ReturnType<typeof useShowCalendar>,
+	'refetchCalendar'
+>
