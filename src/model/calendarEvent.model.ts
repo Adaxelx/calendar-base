@@ -35,15 +35,16 @@ export type CalendarEventFormDTO = {
 	tagsIds: string[]
 }
 
-type CalendarEventWithoutId = Omit<CalendarEventDTO, 'id'>
+export type CalendarEventPost = Omit<CalendarEventDTO, 'tags' | 'id'> &
+	Pick<CalendarEventFormDTO, 'tagsIds'>
 
-export const postCalendarEvent = async (event: CalendarEventWithoutId) => {
-	return client('calendar-events', { body: event })
+export const postCalendarEvent = async (event: CalendarEventPost) => {
+	return client<CalendarEventDTO>('calendar-events', { body: event })
 }
 
 export const editCalendarEvent = async (
 	eventId: number,
-	event: CalendarEventWithoutId,
+	event: CalendarEventPost,
 ) => {
 	return client(`calendar-events/${eventId}`, { body: event })
 }

@@ -3,21 +3,33 @@ import { Field } from '@/components/Field'
 import Label from '@/components/Label'
 import Modal from '@/components/Modal'
 import TagFilter from '@/components/TagFilter'
-import useQuery from '@/hooks/useQuery'
-import { CalendarEventFormDTO } from '@/model/calendarEvent.model'
-import { getTags } from '@/model/tag.model'
-import { handleEventChange } from '@/use-cases/AddEvent'
-import { addCheckedToTags } from '@/use-cases/FilterByTags'
 import { passInputEventAsValue } from '@/utils'
-import { useState } from 'react'
+import { useShowCalendar } from '../ShowCalendar/useShowCalendar'
+import { useAddEvent } from './useAddEvent'
 
 const INPUT_CLASS_NAME = 'text-primary-900'
 
-export const AddEventView = () => {
-	const { handleFieldChange, handleSubmit, event, tagsToSelect } = useAddEvent()
+export type RefetchCalendarFunction = Pick<
+	ReturnType<typeof useShowCalendar>,
+	'refetchCalendar'
+>
+
+export const AddEventView = ({ refetchCalendar }: RefetchCalendarFunction) => {
+	const {
+		handleFieldChange,
+		handleSubmit,
+		event,
+		tagsToSelect,
+		validationErrors,
+		isModalOpen,
+		handleOpenChange,
+	} = useAddEvent({ refetchCalendar })
+
 	return (
 		<div className="px-3 w-full">
 			<Modal
+				isOpen={isModalOpen}
+				handleOpenChange={handleOpenChange}
 				trigger={
 					<Modal.Trigger asChild>
 						<Button className="w-full">Add event</Button>
@@ -28,6 +40,7 @@ export const AddEventView = () => {
 				<form className="flex flex-col" onSubmit={handleSubmit}>
 					<Field
 						labelProps={{ children: 'Name' }}
+						error={validationErrors.name}
 						inputProps={{
 							type: 'text',
 							value: event.name,
@@ -36,6 +49,7 @@ export const AddEventView = () => {
 						}}
 					/>
 					<Field
+						error={validationErrors.date}
 						labelProps={{
 							children: 'Date',
 						}}
@@ -47,6 +61,7 @@ export const AddEventView = () => {
 						}}
 					/>
 					<Field
+						error={validationErrors.timeStart}
 						labelProps={{ children: 'Time start' }}
 						inputProps={{
 							type: 'time',
@@ -56,6 +71,7 @@ export const AddEventView = () => {
 						}}
 					/>
 					<Field
+						error={validationErrors.timeEnd}
 						labelProps={{ children: 'Time end' }}
 						inputProps={{
 							type: 'time',
@@ -86,36 +102,4 @@ export const AddEventView = () => {
 			</Modal>
 		</div>
 	)
-}
-
-const INITIAL_EVENT_FORM: CalendarEventFormDTO = {
-	name: '',
-	date: '',
-	timeStart: '',
-	timeEnd: '',
-	tagsIds: [],
-}
-
-const useAddEvent = () => {
-	const [event, setEvent] = useState<CalendarEventFormDTO>(INITIAL_EVENT_FORM)
-	const tagsQuery = useQuery(getTags)
-
-	const handleFieldChange =
-		(field: keyof CalendarEventFormDTO) => (value: string) => {
-			console.log(field, value)
-			setEvent(handleEventChange(field, value))
-		}
-
-	const tagsWithChecked = addCheckedToTags(tagsQuery.data ?? [], event.tagsIds)
-
-	const handleSubmit: React.FormEventHandler<HTMLFormElement> = async e => {
-		e.preventDefault()
-	}
-
-	return {
-		handleFieldChange,
-		event,
-		handleSubmit,
-		tagsToSelect: tagsWithChecked ?? [],
-	}
 }

@@ -1,9 +1,16 @@
-import { useEffect, useLayoutEffect, useRef, useState } from 'react'
+import {
+	useCallback,
+	useEffect,
+	useLayoutEffect,
+	useRef,
+	useState,
+} from 'react'
 
 export default function useQuery<T>(queryFn: () => Promise<T>) {
 	const [status, setStatus] = useState<'idle' | 'loading' | 'error'>('idle')
 	const [error, setError] = useState<Error | null>(null)
 	const [data, setData] = useState<T | null>(null)
+	const [refetchCount, setRefetchCount] = useState(0)
 
 	const callbackRef = useRef(queryFn)
 
@@ -29,9 +36,12 @@ export default function useQuery<T>(queryFn: () => Promise<T>) {
 			}
 		}
 		fetchData()
-	}, [])
+	}, [refetchCount])
 
 	return {
+		refetch: useCallback(() => {
+			setRefetchCount(count => count + 1)
+		}, []),
 		isLoading: status === 'loading',
 		isIdle: status === 'idle',
 		isError: status === 'error',

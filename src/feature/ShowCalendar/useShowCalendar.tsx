@@ -10,6 +10,7 @@ import {
 	getNextMonth,
 	getPreviousMonth,
 	getStartAndEndOfMonth,
+	transformDateObjectToCalendarTile,
 } from '@/use-cases/ShowCalendar'
 import { capitalizeFirstLetter } from '@/utils'
 import { DateType, dateLib } from '@/utils/date'
@@ -31,18 +32,11 @@ export const useShowCalendar = (filterByTags: FilterByTags) => {
 		),
 	)
 
-	const dateTransformer = (date: DateType) => {
-		return {
-			day: date.date(),
-			date: date,
-			isSelected: date.isSame(selectedDate, 'day'),
-		}
-	}
-
 	const emptyCalendarDays = getAdjustCalendarDaysForWeeks(activeMonth)
 
-	const calendarDays =
-		getCalendarDaysForGivenMonth(activeMonth).map(dateTransformer)
+	const calendarDays = getCalendarDaysForGivenMonth(activeMonth).map(
+		transformDateObjectToCalendarTile(selectedDate),
+	)
 
 	const handleClickDateTile = (date: DateType) => {
 		setSelectedDate(date)
@@ -61,6 +55,7 @@ export const useShowCalendar = (filterByTags: FilterByTags) => {
 	const showCalendarEventLoader = calendarQuery.isLoading
 
 	return {
+		refetchCalendar: calendarQuery.refetch,
 		calendarDays,
 		weekDays,
 		emptyCalendarDays,

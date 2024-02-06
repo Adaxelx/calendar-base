@@ -22,6 +22,7 @@ export default function ShowCalendarView() {
 		handleClickDateTile,
 		handleNextMonth,
 		handlePrevMonth,
+		refetchCalendar,
 	} = useShowCalendar(filterByTags)
 
 	const showLoader = showTagLoader || showCalendarEventLoader
@@ -72,7 +73,7 @@ export default function ShowCalendarView() {
 					</>
 				)}
 				<div className="flex-1" />
-				<AddEventView />
+				<AddEventView refetchCalendar={refetchCalendar} />
 			</section>
 		</article>
 	)

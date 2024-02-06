@@ -62,4 +62,13 @@ export const formatCalendarEvent = ({
 	tags,
 })
 
+export const transformDateObjectToCalendarTile =
+	(selectedDate: DateType) => (date: DateType) => {
+		return {
+			day: date.date(),
+			date: date,
+			isSelected: date.isSame(selectedDate, 'day'),
+		}
+	}
+
 export type FormattedCalendarEvent = ReturnType<typeof formatCalendarEvent>

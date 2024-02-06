@@ -12,25 +12,29 @@ import { Cross1Icon } from '@radix-ui/react-icons'
 
 export type ModalProps = {
 	trigger: React.ReactNode
+	isOpen: boolean
+	handleOpenChange: (open: boolean) => void
 } & HTMLAttributes<HTMLDivElement>
 
 const Modal = ({
 	children,
 	trigger,
 	className = '',
+	isOpen,
+	handleOpenChange,
 	...delegated
 }: ModalProps) => {
 	return (
-		<Root>
+		<Root open={isOpen} onOpenChange={handleOpenChange}>
 			{trigger}
 			<Portal>
 				<Overlay className="grid place-content-center p-3 w-full h-full bg-primary-600 bg-opacity-40 fixed top-0" />
 				<Content
 					{...delegated}
-					className={`fixed w-[calc(100%-24px)] max-h-[calc(100%-24px)] max-w-sm top-1/2 -translate-x-1/2 -translate-y-1/2  flex flex-col  left-1/2 my-0  bg-accent-500 rounded p-4 text-white ${className}`}
+					className={`fixed w-[calc(100%-24px)] max-h-[calc(100%-24px)] max-w-sm top-1/2 -translate-x-1/2 -translate-y-1/2  flex flex-col  left-1/2 my-0  bg-accent-200 rounded p-4 ${className}`}
 				>
 					<Close
-						className="self-end text-red-100 flex h-8 w-8 items-center justify-center"
+						className="self-end text-red-700 flex h-8 w-8 items-center justify-center"
 						aria-label="Close"
 					>
 						<span className="sr-only">Zamknij</span>
