@@ -1,18 +1,31 @@
 import { FormattedCalendarEvent } from '@/use-cases/ShowCalendar'
 import Tag from './Tag'
-import { ReactNode } from 'react'
+import { HTMLAttributes, ReactNode } from 'react'
+
+import { cn } from './utils'
+
+type CalendarEventProps = {
+	title: ReactNode
+	formatedTime: ReactNode
+	tags: ReactNode
+} & DivAttributes
+
+type DivAttributes = Omit<HTMLAttributes<HTMLDivElement>, 'title'>
 
 export const CalendarEvent = ({
 	title,
 	tags,
 	formatedTime,
-}: {
-	title: ReactNode
-	formatedTime: ReactNode
-	tags: ReactNode
-}) => {
+	...rest
+}: CalendarEventProps) => {
 	return (
-		<article className="flex flex-col bg-accent-400 w-full px-4 py-2 gap-2">
+		<article
+			{...rest}
+			className={cn(
+				`flex flex-col bg-accent-400 w-full px-4 py-2 gap-2`,
+				rest.className,
+			)}
+		>
 			<section className="flex justify-between w-full items-center gap-2">
 				{title}
 				{formatedTime}
@@ -26,9 +39,12 @@ export const CalendarEventView = ({
 	title,
 	tags,
 	formatedTime,
-}: FormattedCalendarEvent) => {
+
+	...rest
+}: DivAttributes & FormattedCalendarEvent) => {
 	return (
 		<CalendarEvent
+			{...rest}
 			title={<span className="text-lg">{title}</span>}
 			formatedTime={<span className="text-sm">{formatedTime}</span>}
 			tags={tags?.map(({ name, color, id }) => (
@@ -39,28 +55,3 @@ export const CalendarEventView = ({
 		/>
 	)
 }
-
-// export const CalendarEventForm = ({
-// 	title,
-// 	tags,
-// 	formatedTime,
-// 	onChange,
-// }: FormattedCalendarEvent & { onChange: () => void; values: any }) => {
-// 	const [startTime, endTime] = splitEventFormattedTime(formatedTime)
-// 	return (
-// 		<CalendarEvent
-// 			title={<Input value={title} onChange={onChange} />}
-// 			formatedTime={
-// 				<>
-// 					<Input value={startTime} onChange={onChange} />
-// 					<Input value={endTime} onChange={onChange} />
-// 				</>
-// 			}
-// 			tags={tags?.map(({ name, color, id }) => (
-// 				<Tag color={color} key={id}>
-// 					{name}
-// 				</Tag>
-// 			))}
-// 		/>
-// 	)
-// }

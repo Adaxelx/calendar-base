@@ -42,12 +42,13 @@ export const postCalendarEvent = async (event: CalendarEventPost) => {
 	return client<CalendarEventDTO>('calendar-events', { body: event })
 }
 
-export const editCalendarEvent = async (
-	eventId: number,
-	event: CalendarEventPost,
-) => {
-	return client(`calendar-events/${eventId}`, { body: event })
-}
+export const editCalendarEvent =
+	(eventId: number) => async (event: CalendarEventPost) => {
+		return client<CalendarEventDTO>(`calendar-events/${eventId}`, {
+			body: event,
+			method: 'PUT',
+		})
+	}
 
 export const deleteCalendarEvent = async (eventId: number) => {
 	return client(`calendar-events/${eventId}`, { method: 'DELETE' })

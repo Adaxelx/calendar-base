@@ -7,8 +7,8 @@ import { ValidationError } from '@/utils/errors'
 import { DateType, dateLib } from '@/utils/date'
 
 export const handleEventChange =
-	<T extends keyof CalendarEventFormDTO>(field: T, value: string) =>
-	(prevEvent: CalendarEventFormDTO) => {
+	<Event extends CalendarEventFormDTO>(field: keyof Event, value: string) =>
+	(prevEvent: Event) => {
 		if (Array.isArray(prevEvent[field])) {
 			return {
 				...prevEvent,
