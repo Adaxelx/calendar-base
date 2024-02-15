@@ -4,9 +4,9 @@ import Label from '@/components/Label'
 import Modal from '@/components/Modal'
 import TagFilter from '@/components/TagFilter'
 import { passInputEventAsValue } from '@/utils'
-import { useAddEvent } from '../feature/AddEvent/useAddEvent'
+import { useAddEvent } from '../view/AddEvent/useAddEvent'
 import { CalendarEventFormDTO } from '@/model/calendarEvent.model'
-import { INPUT_CLASS_NAME } from '../feature/AddEvent/AddEventView'
+import { INPUT_CLASS_NAME } from '../view/AddEvent/AddEventView'
 import { ReactNode } from 'react'
 
 type EventFormModalProps = {

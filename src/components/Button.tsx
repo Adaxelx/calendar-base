@@ -1,4 +1,4 @@
-import { useRoutingHook } from '@/feature/Router'
+import { useRoutingHook } from '@/view/Router'
 import type {
 	AnchorHTMLAttributes,
 	ButtonHTMLAttributes,

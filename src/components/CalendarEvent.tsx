@@ -39,7 +39,6 @@ export const CalendarEventView = ({
 	title,
 	tags,
 	formatedTime,
-
 	...rest
 }: DivAttributes & FormattedCalendarEvent) => {
 	return (
