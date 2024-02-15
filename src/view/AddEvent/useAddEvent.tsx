@@ -13,7 +13,7 @@ import {
 } from '@/use-cases/AddEvent'
 import { addCheckedToTags } from '@/use-cases/FilterByTags'
 import { useState } from 'react'
-import { RefetchCalendarFunction } from './AddEventView'
+import { RefetchCalendarFunction } from '../ShowCalendar/useShowCalendar'
 
 const INITIAL_EVENT_FORM: CalendarEventFormDTO = {
 	name: '',

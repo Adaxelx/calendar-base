@@ -14,7 +14,7 @@ export type TagDTO = {
 	color: string
 }
 
-type TagWithoutId = Omit<TagDTO, 'id'>
+export type TagWithoutId = Omit<TagDTO, 'id'>
 
 export const postTag = async (tag: TagWithoutId) => {
 	return client('tags', { body: tag })

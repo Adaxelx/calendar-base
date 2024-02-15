@@ -31,5 +31,6 @@ export const useFilterByTags = () => {
 		filterByTags: filterByTags(selectedTags),
 		tags: filterTags,
 		handleFilterClick,
+		refetchTags: tagsQuery.refetch,
 	}
 }

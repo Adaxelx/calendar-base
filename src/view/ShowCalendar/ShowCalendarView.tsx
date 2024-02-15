@@ -9,9 +9,10 @@ import { AddEventView } from '../AddEvent/AddEventView'
 import { EditEventView } from '../EditEvent/EditEventView'
 import { useEditEvent } from '../EditEvent/useEditEvent'
 import Modal from '@/components/Modal'
+import AddTagView from '../AddTag/AddTagView'
 
 export default function ShowCalendarView() {
-	const { handleFilterClick, showTagLoader, tags, filterByTags } =
+	const { handleFilterClick, showTagLoader, tags, filterByTags, refetchTags } =
 		useFilterByTags()
 
 	const {
@@ -97,7 +98,10 @@ export default function ShowCalendarView() {
 						</>
 					)}
 					<div className="flex-1" />
-					<AddEventView refetchCalendar={refetchCalendar} />
+					<div className="px-3 w-full flex flex-col gap-3">
+						<AddEventView refetchCalendar={refetchCalendar} />
+						<AddTagView refetchTags={refetchTags} />
+					</div>
 				</section>
 			</section>
 		</article>
