@@ -1,10 +1,10 @@
 import Button from '@/components/Button'
-import { Field } from '@/components/Field'
 import Modal from '@/components/Modal'
 
 import { passInputEventAsValue } from '@/utils'
 
 import { useAddTag } from './useAddTag'
+import TagForm from '@/components/TagForm'
 
 type AddTagViewProps = {
 	refetchTags: () => void
@@ -33,33 +33,14 @@ export default function AddTagView({ refetchTags }: AddTagViewProps) {
 			}
 		>
 			<h1>Add tag</h1>
-			<form className="flex flex-col" onSubmit={handleSubmit}>
-				<Field
-					labelProps={{ children: 'Name' }}
-					error={validationErrors.name}
-					inputProps={{
-						type: 'text',
-						value: tag.name,
-						onChange: passInputEventAsValue(handleFieldChange('name')),
-					}}
-				/>
-				<Field
-					error={validationErrors.color}
-					labelProps={{
-						children: 'Date',
-					}}
-					inputProps={{
-						type: 'color',
-						value: tag.color,
-						onChange: passInputEventAsValue(handleFieldChange('color')),
-					}}
-				/>
-				<section className="flex justify-between items-center mt-5 ">
-					<Button type="submit" className="self-end" variant="secondary">
-						Submit tag
-					</Button>
-				</section>
-			</form>
+			<TagForm
+				handleChange={fieldName =>
+					passInputEventAsValue(handleFieldChange(fieldName))
+				}
+				tag={tag}
+				validationErrors={validationErrors}
+				handleSubmit={handleSubmit}
+			/>
 		</Modal>
 	)
 }

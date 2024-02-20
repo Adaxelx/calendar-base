@@ -2,7 +2,7 @@ import { useCallback, useState } from 'react'
 
 /** React specific way to interact with backend */
 export const useMutation = <InputData, ResponseData>(
-	mutation: (data: InputData) => ResponseData,
+	mutation: (data: InputData) => Promise<ResponseData>,
 ) => {
 	const [status, setStatus] = useState<'idle' | 'loading' | 'error'>('idle')
 	const [error, setError] = useState<Error | null>(null)

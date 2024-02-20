@@ -10,6 +10,7 @@ import { EditEventView } from '../EditEvent/EditEventView'
 import { useEditEvent } from '../EditEvent/useEditEvent'
 import Modal from '@/components/Modal'
 import AddTagView from '../AddTag/AddTagView'
+import EditTagView from '../EditTagView/EditTagView'
 
 export default function ShowCalendarView() {
 	const { handleFilterClick, showTagLoader, tags, filterByTags, refetchTags } =
@@ -36,7 +37,8 @@ export default function ShowCalendarView() {
 	const showLoader = showTagLoader || showCalendarEventLoader
 
 	return (
-		<article className="w-full flex h-full items-center">
+		<article className="w-full flex-col flex h-full items-center gap-3">
+			<div className="flex-1" />
 			<section className="flex gap-3 w-full items-center">
 				<section className="flex flex-col flex-[3]">
 					<Calendar
@@ -98,12 +100,13 @@ export default function ShowCalendarView() {
 						</>
 					)}
 					<div className="flex-1" />
-					<div className="px-3 w-full flex flex-col gap-3">
-						<AddEventView refetchCalendar={refetchCalendar} />
-						<AddTagView refetchTags={refetchTags} />
-					</div>
 				</section>
 			</section>
+			<div className="w-full flex flex-1 items-start gap-3">
+				<AddEventView refetchCalendar={refetchCalendar} />
+				<AddTagView refetchTags={refetchTags} />
+				<EditTagView refetchTags={refetchTags} />
+			</div>
 		</article>
 	)
 }

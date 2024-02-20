@@ -1,7 +1,8 @@
+import { handleTagChange, validateTag } from '@/controllers/tag'
 import { useMutation } from '@/hooks/useMutation'
 import { useValidator } from '@/hooks/useValidator'
 import { TagWithoutId, postTag } from '@/model/tag.model'
-import { handleAddTag, handleTagChange, validateTag } from '@/use-cases/AddTag'
+import { handleAddTag } from '@/use-cases/AddTag'
 import { useState } from 'react'
 
 const INITIAL_TAG_FORM: TagWithoutId = {

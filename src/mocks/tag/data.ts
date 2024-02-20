@@ -16,7 +16,7 @@ export const tags = [
 	{
 		id: '1',
 		name: 'string2',
-		color: '#7eea',
+		color: '#7eeaea',
 		createdAt: '2024-01-27T22:28:58.043Z',
 		updatedAt: '2024-01-27T22:28:58.043Z',
 	},
