@@ -9,46 +9,16 @@ import { TagDTO, TagWithoutId, editTag, getTags } from '@/model/tag.model'
 
 import { useState } from 'react'
 import { EditTagPresenter } from './EditTagPresenter'
-import { EditTagUseCase } from '../../use-cases/EditTag/EditTag'
+import { EditTagUseCase } from './EditTagUseCase'
 import { EditTagController } from './EditTagController'
+import DeleteTag from '../DeleteTag/DeleteTag'
 
 const presenter = new EditTagPresenter()
 const useCase = new EditTagUseCase(presenter)
 const controller = new EditTagController(useCase)
 
-const INITIAL_TAG_FORM: TagDTO = {
-	id: '',
-	name: '',
-	color: '',
-}
-
-const useEditTag = () => {
-	const tagsQuery = useQuery(getTags)
-	const { mutate } = useMutation(editTag)
-
-	const [tagToEdit, setTagToEdit] = useState<TagDTO>(INITIAL_TAG_FORM)
-	const [validationErrors, setValidationErrors] = useState<
-		Partial<Record<keyof TagWithoutId, string>>
-	>({})
-	const [isModalOpen, setIsModalOpen] = useState(false)
-
-	presenter.injectSelectedTag(tagToEdit)
-	presenter.injectTags(tagsQuery.data)
-	presenter.injectModalChange(setIsModalOpen)
-	presenter.injectInputChange(setTagToEdit)
-
-	controller.injectValidationErrors(setValidationErrors)
-	controller.injectValidationErrors(setValidationErrors)
-
-	useCase.injectRefetchTags(tagsQuery.refetch)
-	useCase.injectClearForm(() => setTagToEdit(INITIAL_TAG_FORM))
-	useCase.injectEditTagMutation(mutate)
-
-	return { isModalOpen, validationErrors }
-}
-
 export default function EditTagView() {
-	const { isModalOpen, validationErrors } = useEditTag()
+	const { isModalOpen, validationErrors, refetchTags } = useEditTag()
 	return (
 		<Modal
 			isOpen={isModalOpen}
@@ -82,7 +52,44 @@ export default function EditTagView() {
 				tag={presenter.getSelectedTagWithoutId()}
 				validationErrors={validationErrors}
 				handleSubmit={controller.handleSubmit(presenter.getSelectedTag())}
+				actions={
+					<DeleteTag
+						refetchTags={refetchTags}
+						tagId={presenter.getSelectedTag()?.id}
+						handleModalClose={controller.handleModalClose}
+					/>
+				}
 			/>
 		</Modal>
 	)
+}
+
+const INITIAL_TAG_FORM: TagDTO = {
+	id: '',
+	name: '',
+	color: '',
+}
+
+const useEditTag = () => {
+	const tagsQuery = useQuery(getTags)
+	const { mutate } = useMutation(editTag)
+
+	const [tagToEdit, setTagToEdit] = useState<TagDTO>(INITIAL_TAG_FORM)
+	const [validationErrors, setValidationErrors] = useState<
+		Partial<Record<keyof TagWithoutId, string>>
+	>({})
+	const [isModalOpen, setIsModalOpen] = useState(false)
+
+	presenter.injectSelectedTag(tagToEdit)
+	presenter.injectTags(tagsQuery.data)
+	presenter.injectModalChange(setIsModalOpen)
+	presenter.injectInputChange(setTagToEdit)
+
+	controller.injectValidationErrors(setValidationErrors)
+
+	useCase.injectRefetchTags(tagsQuery.refetch)
+	useCase.injectClearForm(() => setTagToEdit(INITIAL_TAG_FORM))
+	useCase.injectEditTagMutation(mutate)
+
+	return { isModalOpen, validationErrors, refetchTags: tagsQuery.refetch }
 }

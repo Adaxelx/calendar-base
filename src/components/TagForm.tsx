@@ -1,7 +1,7 @@
 import { TagWithoutId } from '@/model/tag.model'
 import Button from './Button'
 import { Field } from './Field'
-import { ChangeEventHandler } from 'react'
+import { ChangeEventHandler, ReactNode } from 'react'
 
 type TagFormProps = {
 	handleChange: (
@@ -11,6 +11,7 @@ type TagFormProps = {
 	validationErrors: Partial<Record<keyof TagWithoutId, string>>
 	handleSubmit: React.FormEventHandler<HTMLFormElement>
 	isFormDisabled?: boolean
+	actions: ReactNode
 }
 
 export default function TagForm({
@@ -19,6 +20,7 @@ export default function TagForm({
 	validationErrors,
 	handleSubmit,
 	isFormDisabled,
+	actions,
 }: TagFormProps) {
 	return (
 		<form className="flex flex-col" onSubmit={handleSubmit}>
@@ -45,6 +47,7 @@ export default function TagForm({
 				}}
 			/>
 			<section className="flex justify-between items-center mt-5 ">
+				{actions}
 				<Button
 					type="submit"
 					className="self-end"

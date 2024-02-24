@@ -105,7 +105,7 @@ export default function ShowCalendarView() {
 			<div className="w-full flex flex-1 items-start gap-3">
 				<AddEventView refetchCalendar={refetchCalendar} />
 				<AddTagView refetchTags={refetchTags} />
-				<EditTagView refetchTags={refetchTags} />
+				<EditTagView />
 			</div>
 		</article>
 	)

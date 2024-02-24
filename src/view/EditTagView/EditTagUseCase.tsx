@@ -1,5 +1,5 @@
 import { TagDTO, TagWithoutId } from '@/model/tag.model'
-import { EditTagPresenter } from '../../view/EditTagView/EditTagPresenter'
+import { EditTagPresenter } from './EditTagPresenter'
 
 export class EditTagUseCase {
 	#refetchTags!: () => void

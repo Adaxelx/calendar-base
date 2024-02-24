@@ -1,7 +1,7 @@
 import { TagDTO, TagValidationLogic, TagWithoutId } from '@/model/tag.model'
 import Validator from '@/utils/Validator'
 import { Dispatch, FormEvent, SetStateAction } from 'react'
-import { EditTagUseCase } from '../../use-cases/EditTag/EditTag'
+import { EditTagUseCase } from './EditTagUseCase'
 
 // Presenter powinien mieć stan
 // Controller nie ma stanu, obsługuje akcje użytkownika
