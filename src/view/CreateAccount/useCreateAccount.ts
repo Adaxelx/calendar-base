@@ -7,7 +7,7 @@ import { createUser } from '@/model/auth.model'
 import {
 	RegisterFields,
 	RegisterStateUpdater,
-	validateSubmission,
+	UserValidationLogic,
 } from '@/use-cases/CreateAccount'
 
 const INITIAL_STATE = {
@@ -16,13 +16,16 @@ const INITIAL_STATE = {
 	username: '',
 }
 
+const userValidationLogic = new UserValidationLogic()
 /** Connect react state logic to business logic */
 export default function useCreateUser() {
 	const [registerState, setRegisterState] =
 		useState<RegisterFields>(INITIAL_STATE)
 
-	const { mutate } = useMutation(createUser) // add tests
-	const { validate, validationErrors } = useValidator(validateSubmission) // add tests
+	const { mutate } = useMutation(createUser)
+	const { validate, validationErrors } = useValidator(
+		userValidationLogic.validateRegister,
+	)
 
 	const handleRegisterStateUpdate: RegisterStateUpdater = (field, value) => {
 		setRegisterState(prevState => ({ ...prevState, [field]: value }))

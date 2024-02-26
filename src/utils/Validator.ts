@@ -1,4 +1,3 @@
-import { TagWithoutId } from '@/model/tag.model'
 import { Dispatch, SetStateAction } from 'react'
 import { ValidationError } from './errors'
 
@@ -6,7 +5,7 @@ export default class Validator<
 	ValidationObject extends Record<string, string>,
 > {
 	private setValidationErrors!: Dispatch<
-		SetStateAction<Partial<Record<keyof TagWithoutId, string>>>
+		SetStateAction<Partial<Record<keyof ValidationObject, string>>>
 	>
 
 	constructor(private validator: (data: ValidationObject) => void) {
@@ -15,7 +14,7 @@ export default class Validator<
 
 	injectSetValidationErrors(
 		setValidationErrors: Dispatch<
-			SetStateAction<Partial<Record<keyof TagWithoutId, string>>>
+			SetStateAction<Partial<Record<keyof ValidationObject, string>>>
 		>,
 	) {
 		this.setValidationErrors = setValidationErrors

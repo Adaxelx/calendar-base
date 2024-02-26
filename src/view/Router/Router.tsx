@@ -1,6 +1,7 @@
 import React, { createContext, useState } from 'react'
 import CreateUserView from '../CreateAccount/CreateAccountView'
 import HomePage from '../HomePage'
+import { UserProvider } from '@/components/UserContext'
 
 // Create the router context
 const RouterContext = createContext<{
@@ -30,9 +31,11 @@ const RouterProvider = () => {
 	}
 
 	return (
-		<RouterContext.Provider value={{ handleRedirect }}>
-			{CurrentPage ? <CurrentPage /> : null}
-		</RouterContext.Provider>
+		<UserProvider>
+			<RouterContext.Provider value={{ handleRedirect }}>
+				{CurrentPage ? <CurrentPage /> : null}
+			</RouterContext.Provider>
+		</UserProvider>
 	)
 }
 

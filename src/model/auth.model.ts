@@ -15,7 +15,7 @@ export type AuthDTO = {
 const BASE = 'auth'
 
 export const loginUser = async (userCredentials: AuthDataDTO) => {
-	return client(`${BASE}/login`, { body: userCredentials })
+	return client<UserRegisterDTO>(`${BASE}/login`, { body: userCredentials })
 }
 
 export const createUser = async (user: AuthDataDTO) => {

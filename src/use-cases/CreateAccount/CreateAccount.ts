@@ -1,3 +1,4 @@
+import { AuthDataDTO } from '@/model/auth.model'
 import { ValidationError } from '@/utils/errors'
 
 export type RegisterFields = {
@@ -13,48 +14,51 @@ export type RegisterStateUpdater = <T extends RegisterFieldNames>(
 	value: RegisterFields[T],
 ) => void
 
-const CONFIG = {
-	username: {
-		minLength: 4,
-	},
-	password: {
-		minLength: 8,
-	},
-}
-
-const arePasswordsSame = ({
-	password,
-	repeatPassword,
-}: Pick<RegisterFields, 'password' | 'repeatPassword'>) => {
-	if (password !== repeatPassword) {
-		throw new ValidationError("Passwords don't match", 'repeatPassword')
+export class UserValidationLogic {
+	private CONFIG = {
+		username: {
+			minLength: 4,
+		},
+		password: {
+			minLength: 8,
+		},
 	}
-}
 
-const isPasswordLongEnough = ({
-	password,
-}: Pick<RegisterFields, 'password'>) => {
-	if (password.length < CONFIG.password.minLength) {
-		throw new ValidationError(
-			`Password is too short - min. ${CONFIG.password.minLength} characters`,
-			'password',
-		)
+	private arePasswordsSame({
+		password,
+		repeatPassword,
+	}: Pick<RegisterFields, 'password' | 'repeatPassword'>) {
+		if (password !== repeatPassword) {
+			throw new ValidationError("Passwords don't match", 'repeatPassword')
+		}
 	}
-}
 
-const isUsernameLongEnough = ({
-	username,
-}: Pick<RegisterFields, 'username'>) => {
-	if (username.length < CONFIG.username.minLength) {
-		throw new ValidationError(
-			`Username is too short - min. ${CONFIG.username.minLength} characters`,
-			'username',
-		)
+	private isPasswordLongEnough({ password }: Pick<RegisterFields, 'password'>) {
+		if (password.length < this.CONFIG.password.minLength) {
+			throw new ValidationError(
+				`Password is too short - min. ${this.CONFIG.password.minLength} characters`,
+				'password',
+			)
+		}
 	}
-}
 
-export const validateSubmission = (fields: RegisterFields) => {
-	isUsernameLongEnough(fields)
-	isPasswordLongEnough(fields)
-	arePasswordsSame(fields)
+	private isUsernameLongEnough({ username }: Pick<RegisterFields, 'username'>) {
+		if (username.length < this.CONFIG.username.minLength) {
+			throw new ValidationError(
+				`Username is too short - min. ${this.CONFIG.username.minLength} characters`,
+				'username',
+			)
+		}
+	}
+
+	public validateRegister = (fields: RegisterFields) => {
+		this.isUsernameLongEnough(fields)
+		this.isPasswordLongEnough(fields)
+		this.arePasswordsSame(fields)
+	}
+
+	public validateLogin = (fields: AuthDataDTO) => {
+		this.isUsernameLongEnough(fields)
+		this.isPasswordLongEnough(fields)
+	}
 }
