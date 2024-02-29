@@ -3,9 +3,8 @@ import Modal from '@/components/Modal'
 import TagFilter from '@/components/TagFilter'
 import TagForm from '@/components/TagForm'
 import { useMutation } from '@/hooks/useMutation'
-import useQuery from '@/hooks/useQuery'
 
-import { TagDTO, TagWithoutId, editTag, getTags } from '@/model/tag.model'
+import { TagDTO, TagWithoutId, editTag, useTagsQuery } from '@/model/tag.model'
 
 import { useState } from 'react'
 import { EditTagPresenter } from './EditTagPresenter'
@@ -71,7 +70,7 @@ const INITIAL_TAG_FORM: TagDTO = {
 }
 
 const useEditTag = () => {
-	const tagsQuery = useQuery(getTags)
+	const tagsQuery = useTagsQuery()
 	const { mutate } = useMutation(editTag)
 
 	const [tagToEdit, setTagToEdit] = useState<TagDTO>(INITIAL_TAG_FORM)
@@ -81,7 +80,7 @@ const useEditTag = () => {
 	const [isModalOpen, setIsModalOpen] = useState(false)
 
 	presenter.injectSelectedTag(tagToEdit)
-	presenter.injectTags(tagsQuery.data)
+	presenter.injectTags(tagsQuery.data ?? [])
 	presenter.injectModalChange(setIsModalOpen)
 	presenter.injectInputChange(setTagToEdit)
 

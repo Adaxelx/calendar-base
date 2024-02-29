@@ -1,8 +1,8 @@
 import { useMutation } from '@/hooks/useMutation'
-import useQuery from '@/hooks/useQuery'
+
 import { useValidator } from '@/hooks/useValidator'
 import { editCalendarEvent } from '@/model/calendarEvent.model'
-import { getTags } from '@/model/tag.model'
+import { useTagsQuery } from '@/model/tag.model'
 import {
 	handleEventChange,
 	transformDateToApi,
@@ -24,7 +24,7 @@ export const useEditEvent = ({ refetchCalendar }: RefetchCalendarFunction) => {
 		undefined,
 	)
 
-	const tagsQuery = useQuery(getTags)
+	const tagsQuery = useTagsQuery()
 
 	const { mutate } = useMutation(editCalendarEvent(Number(event?.id))) // add tests
 	const { validate, validationErrors } = useValidator(validateCalendarEvent) // add tests

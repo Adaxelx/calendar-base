@@ -19,8 +19,8 @@ const UserStateContext = React.createContext<
 	{ state: State; dispatch: Dispatch } | undefined
 >(undefined)
 
-const TOKEN_KEY = 'token'
-const USER_KEY = 'user'
+export const TOKEN_KEY = 'cal_token'
+export const USER_KEY = 'cal_user'
 
 function userReducer(state: State, action: Action) {
 	switch (action.type) {
@@ -50,7 +50,7 @@ const initialState = (initialState: State) => {
 	}
 	const token = window.localStorage.getItem(TOKEN_KEY)
 
-	if (isTokenValid(token)) {
+	if (!isTokenValid(token)) {
 		window.localStorage.clear()
 		return initialState
 	}

@@ -1,6 +1,7 @@
 import { ValidationError } from '@/utils/errors'
 import { AuthDTO } from './auth.model'
 import { client } from './utils'
+import useQuery from '@/hooks/useQuery'
 
 export const getUser = async (userId: UserDTO['id']) => {
 	return client(`users/${userId}`)
@@ -43,4 +44,8 @@ export class UserValidationLogic {
 	validateUser = <UserType extends UserWithoutId>(user: UserType) => {
 		this.#validateUsername(user.username)
 	}
+}
+
+export const useUserQuery = (userId: string) => {
+	return useQuery({ queryFn: () => getUser(userId), queryKey: ['user'] })
 }

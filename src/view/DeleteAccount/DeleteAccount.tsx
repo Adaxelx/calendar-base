@@ -30,7 +30,9 @@ const useDeleteAccount = () => {
 		dispatch,
 	} = useUser()
 
-	presenter.injectLogout(() => dispatch({ type: 'logout' }))
+	presenter.injectLogout(() => {
+		dispatch({ type: 'logout' })
+	})
 	controller.injectUserId(user?.id)
 	useCase.injectDeleteMutation(mutate)
 }

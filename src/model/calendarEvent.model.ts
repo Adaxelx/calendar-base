@@ -1,3 +1,4 @@
+import useQuery from '@/hooks/useQuery'
 import { TagDTO } from './tag.model'
 import { client, createSearchParams } from './utils'
 
@@ -52,4 +53,13 @@ export const editCalendarEvent =
 
 export const deleteCalendarEvent = async (eventId: number) => {
 	return client(`calendar-events/${eventId}`, { method: 'DELETE' })
+}
+
+export const useCalendarEventsQuery = (
+	filters: Partial<CalendarEventsFilters>,
+) => {
+	return useQuery({
+		queryFn: () => getCalendarEvents(filters),
+		queryKey: ['calendar-events', filters],
+	})
 }

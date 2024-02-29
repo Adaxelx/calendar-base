@@ -1,3 +1,5 @@
+import { TOKEN_KEY } from '@/components/UserContext'
+
 type UserRequestInit = Omit<RequestInit, 'body'> & { body?: unknown }
 
 export function client<T>(
@@ -76,14 +78,12 @@ function getRequestConfiguration(customConfig: UserRequestInit = {}) {
 	return config
 }
 
-const localStorageKey = '__calendar_token__'
-
 function logout() {
-	return window.localStorage.removeItem(localStorageKey)
+	return window.localStorage.removeItem(TOKEN_KEY)
 }
 
 function getLoginToken() {
-	return window.localStorage.getItem(localStorageKey)
+	return window.localStorage.getItem(TOKEN_KEY)
 }
 
 export const createSearchParams = (params: Record<string, string>) => {

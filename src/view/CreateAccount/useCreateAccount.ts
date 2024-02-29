@@ -9,6 +9,7 @@ import {
 	UserValidationLogic,
 } from '@/use-cases/CreateAccount'
 import { useUser } from '@/components/UserContext'
+import { useRoutingHook } from '../Router'
 
 const INITIAL_STATE = {
 	password: '',
@@ -21,9 +22,8 @@ const userValidationLogic = new UserValidationLogic()
 export default function useCreateUser() {
 	const [registerState, setRegisterState] =
 		useState<RegisterFields>(INITIAL_STATE)
-	const { dispatch, state } = useUser()
-	console.log(state)
-
+	const { dispatch } = useUser()
+	const { handleRedirect } = useRoutingHook()
 	const { mutate } = useMutation(createUser)
 	const { validate, validationErrors } = useValidator(
 		userValidationLogic.validateRegister,
@@ -41,6 +41,7 @@ export default function useCreateUser() {
 			password: registerState.password,
 		})
 		if (!userData) return
+
 		dispatch({
 			type: 'login',
 			payload: {
@@ -48,6 +49,7 @@ export default function useCreateUser() {
 				user: { id: userData.id, username: userData.username },
 			},
 		})
+		handleRedirect('/')
 
 		// add redirect here to calendar
 	}

@@ -1,11 +1,10 @@
 import { useMutation } from '@/hooks/useMutation'
-import useQuery from '@/hooks/useQuery'
 import { useValidator } from '@/hooks/useValidator'
 import {
 	CalendarEventFormDTO,
 	postCalendarEvent,
 } from '@/model/calendarEvent.model'
-import { getTags } from '@/model/tag.model'
+import { useTagsQuery } from '@/model/tag.model'
 import {
 	handleEventChange,
 	transformDateToApi,
@@ -26,7 +25,7 @@ const INITIAL_EVENT_FORM: CalendarEventFormDTO = {
 export const useAddEvent = ({ refetchCalendar }: RefetchCalendarFunction) => {
 	const [event, setEvent] = useState<CalendarEventFormDTO>(INITIAL_EVENT_FORM)
 	const [isModalOpen, setIsModalOpen] = useState(false)
-	const tagsQuery = useQuery(getTags)
+	const tagsQuery = useTagsQuery()
 
 	const { mutate } = useMutation(postCalendarEvent) // add tests
 	const { validate, validationErrors } = useValidator(validateCalendarEvent) // add tests

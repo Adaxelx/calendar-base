@@ -1,5 +1,4 @@
-import useQuery from '@/hooks/useQuery'
-import { getTags } from '@/model/tag.model'
+import { useTagsQuery } from '@/model/tag.model'
 import {
 	addCheckedToTags,
 	extractTagIds,
@@ -10,7 +9,7 @@ import { useEffect, useState } from 'react'
 
 export const useFilterByTags = () => {
 	const [selectedTags, setSelectedTags] = useState<string[]>([])
-	const tagsQuery = useQuery(getTags)
+	const tagsQuery = useTagsQuery()
 
 	useEffect(() => {
 		if (tagsQuery.data) {

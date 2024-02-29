@@ -1,5 +1,6 @@
 import { ValidationError } from '@/utils/errors'
 import { client } from './utils'
+import useQuery from '@/hooks/useQuery'
 
 export const getTags = async () => {
 	return client<TagDTO[]>('tags')
@@ -54,4 +55,8 @@ export class TagValidationLogic {
 		this.#validateTagName(tag.name)
 		this.#validateTagColor(tag.color)
 	}
+}
+
+export const useTagsQuery = () => {
+	return useQuery({ queryKey: ['tags'], queryFn: getTags })
 }

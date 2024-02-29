@@ -40,7 +40,9 @@ export const findEventsForGivenDate = (
 	events: CalendarEventDTO[],
 	date: DateType,
 ) => {
-	return events.filter(event => dateLib(event.start).isSame(date, 'day'))
+	return events.filter(event => {
+		return dateLib(event.start).isSame(date, 'date')
+	})
 }
 
 export const formatHoursStartAndEnd = (startDate: string, endDate: string) => {

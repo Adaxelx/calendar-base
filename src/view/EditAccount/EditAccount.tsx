@@ -3,13 +3,12 @@ import Modal from '@/components/Modal'
 
 import { useMutation } from '@/hooks/useMutation'
 
-import { UserWithoutId } from '@/model/user.model'
+import { UserWithoutId, useUserQuery } from '@/model/user.model'
 
 import { useState } from 'react'
 
-import { UserDTO, editUser, getUser } from '@/model/user.model'
+import { UserDTO, editUser } from '@/model/user.model'
 import { useUser } from '@/components/UserContext'
-import useQuery from '@/hooks/useQuery'
 
 import { Field } from '@/components/Field'
 import { EditUserPresenter } from './EditUserPresenter'
@@ -72,7 +71,7 @@ const useEditUser = () => {
 		throw new Error('User is not logged in')
 	}
 
-	const userQuery = useQuery(() => getUser(user?.id))
+	const userQuery = useUserQuery(user.id)
 
 	const [userToEdit, setUserToEdit] = useState({
 		id: user.id,

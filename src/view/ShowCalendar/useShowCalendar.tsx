@@ -1,5 +1,4 @@
-import useQuery from '@/hooks/useQuery'
-import { getCalendarEvents } from '@/model/calendarEvent.model'
+import { useCalendarEventsQuery } from '@/model/calendarEvent.model'
 import type { FilterByTags } from '@/use-cases/FilterByTags'
 import {
 	findEventsForGivenDate,
@@ -22,8 +21,8 @@ export const useShowCalendar = (filterByTags: FilterByTags) => {
 	const [selectedDate, setSelectedDate] = useState(initialDate)
 	const [activeMonth, setActiveMonth] = useState(initialDate)
 
-	const calendarQuery = useQuery(() =>
-		getCalendarEvents(getStartAndEndOfMonth(activeMonth)),
+	const calendarQuery = useCalendarEventsQuery(
+		getStartAndEndOfMonth(activeMonth),
 	)
 
 	const foundEvents = filterByTags(
