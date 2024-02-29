@@ -1,12 +1,18 @@
 import * as React from 'react'
 import { jwtDecode } from 'jwt-decode'
-import { UserRegisterDTO } from '@/model/user.model'
+import { UserDTO } from '@/model/user.model'
 
 type Action =
-	| { type: 'login'; payload: { token: string; user: UserRegisterDTO | null } }
+	| { type: 'login'; payload: { token: string; user: UserDTO | null } }
 	| { type: 'logout' }
+	| {
+			type: 'updateUserData'
+			payload: { user: UserDTO }
+			// eslint-disable-next-line no-mixed-spaces-and-tabs
+	  }
+
 type Dispatch = (action: Action) => void
-type State = { token: string | null; user: UserRegisterDTO | null }
+type State = { token: string | null; user: UserDTO | null }
 type UserProviderProps = { children: React.ReactNode }
 
 const UserStateContext = React.createContext<
@@ -27,6 +33,10 @@ function userReducer(state: State, action: Action) {
 			window.localStorage.removeItem(TOKEN_KEY)
 			window.localStorage.removeItem(USER_KEY)
 			return { ...state, token: null, user: null }
+		}
+		case 'updateUserData': {
+			window.localStorage.setItem(USER_KEY, JSON.stringify(action.payload.user))
+			return { ...state, user: action.payload.user }
 		}
 	}
 }

@@ -12,9 +12,12 @@ export default function HomePage() {
 		return (
 			<div className="p-3 flex flex-col gap-2 items-start h-full w-full">
 				<nav className="flex-1 w-full">
-					<div className="flex justify-end w-full items-start gap-3">
-						<EditAccount />
-						<DeleteAccount />
+					<div className="flex justify-between items-center">
+						<p className=" font-medium text-accent-600 text-lg">{`Witaj ${user.username}!`}</p>
+						<div className="flex justify-end items-start gap-3">
+							<EditAccount />
+							<DeleteAccount />
+						</div>
 					</div>
 				</nav>
 				<ShowCalendarView />

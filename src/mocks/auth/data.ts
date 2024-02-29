@@ -7,6 +7,6 @@ export const authorized = {
 
 export const registerData = {
 	id: 1,
-	usernname: 'Bob',
+	username: 'Bob',
 	authorized,
 }
