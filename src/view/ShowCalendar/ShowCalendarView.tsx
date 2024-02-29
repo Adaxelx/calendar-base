@@ -37,7 +37,7 @@ export default function ShowCalendarView() {
 	const showLoader = showTagLoader || showCalendarEventLoader
 
 	return (
-		<article className="w-full flex-col flex h-full items-center gap-3">
+		<article className="w-full flex-col flex items-center gap-3">
 			<div className="flex-1" />
 			<section className="flex gap-3 w-full items-center">
 				<section className="flex flex-col flex-[3]">
