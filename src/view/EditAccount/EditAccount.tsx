@@ -3,7 +3,7 @@ import Modal from '@/components/Modal'
 
 import { useMutation } from '@/hooks/useMutation'
 
-import { UserEditDTO, useUserQuery } from '@/model/user.model'
+import { UserDTO, UserEditDTO, useUserQuery } from '@/model/user.model'
 
 import { useState } from 'react'
 
@@ -12,7 +12,7 @@ import { useUser } from '@/components/UserContext'
 
 import { Field } from '@/components/Field'
 import { EditUserPresenter } from './EditUserPresenter'
-import { EditUserUseCase, UserEditFields } from './EditUserUseCase'
+import { EditUserUseCase } from './EditUserUseCase'
 import { EditUserController } from './EditUserController'
 
 const presenter = new EditUserPresenter()
@@ -96,7 +96,7 @@ const useEditUser = () => {
 	presenter.injectUserToEdit(userToEdit)
 	presenter.injectModalChange(setIsModalOpen)
 	presenter.injectInputChange(setUserToEdit)
-	presenter.injectChangeUser((user: UserEditFields) => {
+	presenter.injectChangeUser((user: UserDTO) => {
 		dispatch({ type: 'updateUserData', payload: { user } })
 	})
 

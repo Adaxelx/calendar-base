@@ -40,6 +40,7 @@ export default function AddTagView({ refetchTags }: AddTagViewProps) {
 				tag={tag}
 				validationErrors={validationErrors}
 				handleSubmit={handleSubmit}
+				actions={null}
 			/>
 		</Modal>
 	)

@@ -6,9 +6,7 @@ export type UserEditFields = UserDTO & { password: string }
 export class EditUserUseCase {
 	#refetchUser!: () => void
 
-	#editUserMutation!: (
-		data: UserEditFields,
-	) => Promise<UserEditFields | undefined>
+	#editUserMutation!: (data: UserEditFields) => Promise<UserDTO | undefined>
 	constructor(private presenter: EditUserPresenter) {
 		this.presenter = presenter
 	}
@@ -18,9 +16,7 @@ export class EditUserUseCase {
 	}
 
 	injectEditUserMutation(
-		editUserMutation: (
-			data: UserEditFields,
-		) => Promise<UserEditFields | undefined>,
+		editUserMutation: (data: UserEditFields) => Promise<UserDTO | undefined>,
 	) {
 		this.#editUserMutation = editUserMutation
 	}
