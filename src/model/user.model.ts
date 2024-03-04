@@ -2,12 +2,13 @@ import { ValidationError } from '@/utils/errors'
 import { AuthDTO } from './auth.model'
 import { client } from './utils'
 import useQuery from '@/hooks/useQuery'
+import { UserEditFields } from '@/view/EditAccount/EditUserUseCase'
 
 export const getUser = async (userId: UserDTO['id']) => {
 	return client(`users/${userId}`)
 }
 
-export const editUser = async ({ id: userId, ...user }: UserDTO) => {
+export const editUser = async ({ id: userId, ...user }: UserEditFields) => {
 	return client<UserDTO>(`users/${userId}`, { body: user, method: 'PUT' })
 }
 
@@ -24,7 +25,7 @@ export type UserRegisterDTO = UserDTO & {
 	authorized: AuthDTO
 }
 
-export type UserWithoutId = Omit<UserDTO, 'id'>
+export type UserEditDTO = Omit<UserDTO, 'id'> & { password: string }
 
 export class UserValidationLogic {
 	#validateUsername = (username: string) => {
@@ -41,7 +42,7 @@ export class UserValidationLogic {
 		return
 	}
 
-	validateUser = <UserType extends UserWithoutId>(user: UserType) => {
+	validateUser = <UserType extends UserEditDTO>(user: UserType) => {
 		this.#validateUsername(user.username)
 	}
 }

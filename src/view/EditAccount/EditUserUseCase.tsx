@@ -1,11 +1,14 @@
-import { UserWithoutId } from '@/model/user.model'
+import { UserEditDTO } from '@/model/user.model'
 import { UserDTO } from '@/model/user.model'
 import { EditUserPresenter } from './EditUserPresenter'
 
+export type UserEditFields = UserDTO & { password: string }
 export class EditUserUseCase {
 	#refetchUser!: () => void
 
-	#editUserMutation!: (data: UserDTO) => Promise<UserDTO | undefined>
+	#editUserMutation!: (
+		data: UserEditFields,
+	) => Promise<UserEditFields | undefined>
 	constructor(private presenter: EditUserPresenter) {
 		this.presenter = presenter
 	}
@@ -15,12 +18,14 @@ export class EditUserUseCase {
 	}
 
 	injectEditUserMutation(
-		editUserMutation: (data: UserDTO) => Promise<UserDTO | undefined>,
+		editUserMutation: (
+			data: UserEditFields,
+		) => Promise<UserEditFields | undefined>,
 	) {
 		this.#editUserMutation = editUserMutation
 	}
 
-	handleFieldChange(fieldsToUpdate: Partial<UserWithoutId>) {
+	handleFieldChange(fieldsToUpdate: Partial<UserEditDTO>) {
 		this.presenter.updateField(fieldsToUpdate)
 	}
 
@@ -37,8 +42,8 @@ export class EditUserUseCase {
 	}
 
 	handleEditUser = async (
-		user: UserDTO,
-		validate: (data: UserWithoutId) => boolean,
+		user: UserEditFields,
+		validate: (data: UserEditDTO) => boolean,
 	) => {
 		if (!validate(user)) return
 		const response = await this.#editUserMutation(user)

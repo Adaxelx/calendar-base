@@ -1,18 +1,18 @@
-import { UserWithoutId } from '@/model/user.model'
+import { UserEditDTO } from '@/model/user.model'
 import { Dispatch, FormEvent, SetStateAction } from 'react'
-import { UserDTO, UserValidationLogic } from '@/model/user.model'
+import { UserValidationLogic } from '@/model/user.model'
 import Validator from '@/utils/Validator'
-import { EditUserUseCase } from './EditUserUseCase'
+import { EditUserUseCase, UserEditFields } from './EditUserUseCase'
 
 export class EditUserController {
-	#validator: Validator<UserWithoutId>
+	#validator: Validator<UserEditDTO>
 	constructor(private useCase: EditUserUseCase) {
 		this.useCase = useCase
 		const userValidationLogic = new UserValidationLogic()
 		this.#validator = new Validator(userValidationLogic.validateUser)
 	}
 
-	handleFieldChange = (field: keyof UserWithoutId) => {
+	handleFieldChange = (field: keyof UserEditDTO) => {
 		return (event: React.ChangeEvent<HTMLInputElement>) => {
 			return this.useCase.handleFieldChange({
 				[field]: event.target.value,
@@ -22,7 +22,7 @@ export class EditUserController {
 
 	injectValidationErrors(
 		setValidationErrors: Dispatch<
-			SetStateAction<Partial<Record<keyof UserWithoutId, string>>>
+			SetStateAction<Partial<Record<keyof UserEditDTO, string>>>
 		>,
 	) {
 		this.#validator.injectSetValidationErrors(setValidationErrors)
@@ -40,7 +40,7 @@ export class EditUserController {
 		this.useCase.handleModalOpenChange(open)
 	}
 
-	handleSubmit = (user: UserDTO) => async (e: FormEvent) => {
+	handleSubmit = (user: UserEditFields) => async (e: FormEvent) => {
 		e.preventDefault()
 		await this.useCase.handleEditUser(user, this.#validator.validate)
 	}

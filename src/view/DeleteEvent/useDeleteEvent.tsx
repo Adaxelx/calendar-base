@@ -14,8 +14,8 @@ export const useDeleteEvent = ({
 	DeleteElementProps) => {
 	const { mutate } = useMutation(deleteCalendarEvent)
 
-	const handleDelete = () => {
-		mutate(Number(eventId))
+	const handleDelete = async () => {
+		await mutate(eventId)
 		refetchCalendar()
 		handleOpenChange(false)
 	}

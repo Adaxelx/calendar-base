@@ -12,7 +12,9 @@ export const extractTagIds = (tags: TagDTO[]) => tags.map(tag => tag.id)
 
 export const filterByTags =
 	(tags: string[]) => (events: FormattedCalendarEvent[]) =>
-		events.filter(event => event.tags?.some(tag => tags.includes(tag.id)))
+		events.filter(event =>
+			event.tags.length ? event.tags?.some(tag => tags.includes(tag.id)) : true,
+		)
 
 export type FilterByTags = ReturnType<typeof filterByTags>
 

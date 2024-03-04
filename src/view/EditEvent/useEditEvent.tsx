@@ -26,7 +26,7 @@ export const useEditEvent = ({ refetchCalendar }: RefetchCalendarFunction) => {
 
 	const tagsQuery = useTagsQuery()
 
-	const { mutate } = useMutation(editCalendarEvent(Number(event?.id))) // add tests
+	const { mutate } = useMutation(editCalendarEvent(event?.id)) // add tests
 	const { validate, validationErrors } = useValidator(validateCalendarEvent) // add tests
 
 	const handleFieldChange =

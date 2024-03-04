@@ -1,14 +1,16 @@
-import { UserWithoutId } from '@/model/user.model'
-import { UserDTO } from '@/model/user.model'
+import { UserEditDTO } from '@/model/user.model'
+import { UserEditFields } from './EditUserUseCase'
 
-type SetUserDTO = ((user: UserDTO) => UserDTO) | UserDTO
+type SetUserEditFields =
+	| ((user: UserEditFields) => UserEditFields)
+	| UserEditFields
 export class EditUserPresenter {
-	#setUserToEdit!: (user: SetUserDTO) => void
+	#setUserToEdit!: (user: SetUserEditFields) => void
 	#setModalOpen!: (open: boolean) => void
-	#userToEdit!: UserDTO
-	#handleChangeUser!: (user: UserDTO) => void
+	#userToEdit!: UserEditFields
+	#handleChangeUser!: (user: UserEditFields) => void
 
-	injectInputChange(setUserToEdit: (user: SetUserDTO) => void) {
+	injectInputChange(setUserToEdit: (user: SetUserEditFields) => void) {
 		this.#setUserToEdit = setUserToEdit
 	}
 
@@ -16,7 +18,7 @@ export class EditUserPresenter {
 		this.#setModalOpen = setModalOpen
 	}
 
-	updateField(fieldsToUpdate: Partial<UserWithoutId>) {
+	updateField(fieldsToUpdate: Partial<UserEditDTO>) {
 		this.#setUserToEdit(prev => ({ ...prev, ...fieldsToUpdate }))
 	}
 
@@ -32,7 +34,7 @@ export class EditUserPresenter {
 		this.#setModalOpen(open)
 	}
 
-	injectUserToEdit(user: UserDTO) {
+	injectUserToEdit(user: UserEditFields) {
 		this.#userToEdit = user
 	}
 
@@ -40,15 +42,19 @@ export class EditUserPresenter {
 		return this.#userToEdit?.username
 	}
 
+	getPassword() {
+		return this.#userToEdit?.password
+	}
+
 	getUserToEdit() {
 		return this.#userToEdit
 	}
 
-	injectChangeUser(changeUser: (user: UserDTO) => void) {
+	injectChangeUser(changeUser: (user: UserEditFields) => void) {
 		this.#handleChangeUser = changeUser
 	}
 
-	changeUser(user: UserDTO) {
+	changeUser(user: UserEditFields) {
 		this.#handleChangeUser(user)
 		this.#setUserToEdit(user)
 	}
