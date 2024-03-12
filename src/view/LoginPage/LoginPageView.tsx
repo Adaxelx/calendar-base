@@ -17,7 +17,7 @@ const useCase = new LoginUserUseCase(presenter)
 const controller = new LoginUserController(useCase)
 
 export default function LoginUser() {
-	const { authData, validationErrors } = useLoginUser()
+	const { authData, validationErrors, isLoading } = useLoginUser()
 	return (
 		<article className="w-full h-full flex flex-col items-center justify-center p-3">
 			<section className="flex flex-col gap-2 md:w-1/2 w-full">
@@ -49,6 +49,7 @@ export default function LoginUser() {
 						variant="tertiary"
 						className="text-accent-700 text-center w-full"
 						onClick={controller.handleRegisterRedirect}
+						disabled={isLoading}
 					>
 						Nie masz konta? Zarejestruj się
 					</Button>
@@ -66,7 +67,7 @@ const useLoginUser = () => {
 	const [validationErrors, setValidationErrors] = useState<
 		Partial<Record<keyof AuthDataDTO, string>>
 	>({})
-	const { mutate } = useMutation(loginUser)
+	const { mutate, isLoading } = useMutation(loginUser)
 	const { dispatch } = useUser()
 	const { handleRedirect } = useRoutingHook()
 
@@ -78,5 +79,5 @@ const useLoginUser = () => {
 
 	useCase.incjectMutate(mutate)
 
-	return { authData, validationErrors }
+	return { authData, validationErrors, isLoading }
 }
