@@ -1,4 +1,12 @@
-# Calendar
+# Calendar clean code approach
+
+## Non-standarized approach repo:
+https://github.com/superkacper4/calendar-react-comprasion 
+
+## Changes by 3rd developer: 
+https://github.com/BKopysc/calendar-app-fe-clean-base
+https://github.com/superkacper4/calendar-react-comprasion/tree/feature/default-code-research
+
 
 W tym repo są:
 
