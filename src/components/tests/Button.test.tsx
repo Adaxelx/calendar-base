@@ -25,6 +25,13 @@ describe('Button component', () => {
 	})
 })
 
+// mock external module
+vi.mock('@/feature/Router', () => ({
+	useRoutingHook: vi.fn(() => ({
+		handleRedirect: vi.fn(),
+	})),
+}))
+
 describe('Link component', () => {
 	test('renders link with default props', () => {
 		render(<Link href="#">Go to homepage</Link>)

@@ -1,3 +1,7 @@
+import { CalendarEventDTO } from '@/model/calendarEvent.model'
+import { getRandomInt, range } from '@/utils'
+import { tags } from '../tag/data'
+
 export const event = {
 	id: 0,
 	title: 'string',
@@ -15,4 +19,13 @@ export const event = {
 		},
 	],
 }
-export const events = [event]
+export const events: CalendarEventDTO[] = range(0, 40).map(i => ({
+	id: i.toString(),
+	title: 'string',
+	description: 'string',
+	start: `2024-02-${getRandomInt(1, 29)}T22:28:58.043Z`,
+	end: '2024-02-27T22:28:58.043Z',
+	createdAt: '2024-02-27T22:28:58.043Z',
+	updatedAt: '2024-02-27T22:28:58.043Z',
+	tags: tags.slice(0, getRandomInt(1, 2)),
+}))
